@@ -8,3 +8,4 @@ Tech Stack used:
 * Material 3
 * Retrofit/Moshi
 * Constraint Layout
+* Koin for Dependency Injection
