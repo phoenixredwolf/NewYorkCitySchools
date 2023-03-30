@@ -8,9 +8,7 @@ import retrofit2.http.Query
 interface SchoolDataService {
 
     @GET("s3k6-pzi2.json")
-    suspend fun getAllSchools(
-//        @Query("\$limit") limit: Int = 5
-    ) : List<School>
+    suspend fun getAllSchools() : List<School>
 
     @GET("s3k6-pzi2.json")
     suspend fun getBoroSchools(
@@ -28,7 +26,7 @@ interface SchoolDataService {
     ) : List<School>
 
     @GET("f9bf-2cp4.json")
-    suspend fun getSATForSchool(
+    suspend fun getSatForSchool(
         @Query("dbn") dbn: String
     ) : List<SatScore>
 

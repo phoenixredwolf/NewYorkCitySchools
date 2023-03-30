@@ -9,16 +9,18 @@ enum class Boro(
     BRONX("X"),
     MANHATTAN("M"),
     QUEENS("Q"),
-    STATEN_ISLAND("R")
+    STATEN_ISLAND("R"),
+    SELECT_BORO("")
 }
 
 fun getAllBoros():List<Boro>{
     return listOf(
-        Boro.BROOKLYN,
-        Boro.BRONX,
-        Boro.MANHATTAN,
-        Boro.QUEENS,
-        Boro.STATEN_ISLAND
+        SELECT_BORO,
+        BROOKLYN,
+        BRONX,
+        MANHATTAN,
+        QUEENS,
+        STATEN_ISLAND
     )
 }
 

@@ -80,4 +80,17 @@ dependencies {
 
     // Constraint Layout
     implementation "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha09"
+
+    // Koin
+    implementation 'io.insert-koin:koin-android:3.4.0'
+    implementation 'io.insert-koin:koin-androidx-compose:3.4.3'
+    implementation 'io.insert-koin:koin-androidx-compose-navigation:3.4.3'
+
+    // Koin for tests
+    testImplementation 'io.insert-koin:koin-test:3.4.0'
+    testImplementation 'io.insert-koin:koin-test-junit4:3.4.0'
+    testImplementation 'io.insert-koin:koin-android-test:3.4.0'
+
+    // Webview
+    implementation 'com.google.accompanist:accompanist-webview:0.30.0'
 }

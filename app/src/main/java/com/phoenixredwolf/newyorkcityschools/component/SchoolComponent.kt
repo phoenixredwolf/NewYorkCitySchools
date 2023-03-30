@@ -5,10 +5,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,7 +22,8 @@ fun SchoolComponent(school: School, onSchoolClick: () -> Unit = {}) {
             .padding(8.dp)
             .clickable { onSchoolClick() },
         elevation = CardDefaults.cardElevation(6.dp),
-        shape = RoundedCornerShape(10.dp)
+        shape = RoundedCornerShape(10.dp),
+        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primaryContainer)
     ) {
         Column(
             modifier = Modifier.padding(start = 12.dp, top = 8.dp, bottom = 8.dp )
@@ -30,7 +31,7 @@ fun SchoolComponent(school: School, onSchoolClick: () -> Unit = {}) {
             school.school_name?.let {
                 Text(
                     text = school.school_name,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp
                 )

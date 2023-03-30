@@ -1,17 +1,20 @@
 package com.phoenixredwolf.newyorkcityschools
 
 import android.app.Application
-import com.phoenixredwolf.newyorkcityschools.data.repository.Repository
-import com.phoenixredwolf.newyorkcityschools.network.SchoolApi.retrofitService
-import com.phoenixredwolf.newyorkcityschools.network.SchoolDataManager
+import com.phoenixredwolf.newyorkcityschools.di.appModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
 class App : Application() {
 
-    private val manager by lazy {
-        SchoolDataManager(retrofitService)
-    }
+    override fun onCreate() {
+        super.onCreate()
 
-    val repository by lazy {
-        Repository(manager)
+        startKoin {
+            androidContext(this@App)
+            androidLogger()
+            modules(appModule)
+        }
     }
 }

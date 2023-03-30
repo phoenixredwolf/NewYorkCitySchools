@@ -1,29 +1,33 @@
 package com.phoenixredwolf.newyorkcityschools.component
 
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavController
 import com.phoenixredwolf.newyorkcityschools.data.model.SatScore
 import com.phoenixredwolf.newyorkcityschools.data.model.School
-import com.phoenixredwolf.newyorkcityschools.utility.StringHyperlink
 
 @Composable
 fun DetailComponent(
+    navController: NavController,
     scrollState: ScrollState,
     school: School,
     sat: SatScore?
 ) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .padding(8.dp)
             .verticalScroll(scrollState)
     ) {
@@ -104,7 +108,18 @@ fun DetailComponent(
                 .padding(8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            StringHyperlink(url = school.website!!)
+//            StringHyperlink(url = URLEncoder.encode(school.website!!, "UTF-8"), navController)
+            Text(
+                modifier = Modifier.clickable {
+                    val url = school.website!!
+                    navController.navigate("Web/$url")
+                    },
+                text = "https://${school.website!!}",
+                color = MaterialTheme.colorScheme.scrim,
+                fontSize = 12.sp,
+                textDecoration = TextDecoration.Underline
+            )
+
         }
         school.overview_paragraph?.let {
             Text(text = "Overview", textAlign = TextAlign.Center, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(start = 8.dp))

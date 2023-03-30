@@ -1,7 +1,5 @@
 package com.phoenixredwolf.newyorkcityschools.component
 
-import android.util.Log
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*
@@ -13,12 +11,13 @@ import com.phoenixredwolf.newyorkcityschools.data.model.BottomMenu
 import com.phoenixredwolf.newyorkcityschools.data.model.School
 import com.phoenixredwolf.newyorkcityschools.ui.screens.DetailScreen
 import com.phoenixredwolf.newyorkcityschools.ui.screens.HomeScreen
+import com.phoenixredwolf.newyorkcityschools.ui.screens.SearchScreen
+import com.phoenixredwolf.newyorkcityschools.ui.screens.WebviewScreen
 import com.phoenixredwolf.newyorkcityschools.ui.viewmodel.MainViewModel
 
 @Composable
 fun Navigation(
     navController: NavHostController,
-    scrollState: ScrollState,
     paddingValues: PaddingValues,
     viewModel: MainViewModel
 ) {
@@ -41,26 +40,17 @@ fun Navigation(
             val index = navBackStackEntry.arguments?.getInt("index")
             index?.let {
                 schools.clear()
-                Log.d("LIST CLEARED", "******LIST CLEARED******")
                 schools.addAll(viewModel.schoolsResponse.value)
                 val school = schools[index]
-                school.dbn?.let { it1 -> viewModel.getSatScores(it1) }
-                DetailScreen(navController = navController, scrollState = scrollState, school = school, viewModel, isLoading, isError)
+                school.dbn?.let { sat -> viewModel.getSatScores(sat) }
+                DetailScreen(navController = navController, school = school, viewModel, isLoading, isError)
             }
         }
-        composable("BoroScreen",
-            arguments = listOf(navArgument("index"){type = NavType.IntType})
+        composable("Web/{url}",
+            arguments = listOf(navArgument("url") {type = NavType.StringType})
         ) {navBackStackEntry ->
-            val index = navBackStackEntry.arguments?.getInt("index")
-            index?.let {
-                schools.clear()
-                Log.d("LIST CLEARED", "******LIST CLEARED******")
-                schools.addAll(viewModel.schoolsResponse.collectAsState().value)
-                val school = schools[index]
-                school.dbn?.let { it1 -> viewModel.getSatScores(it1) }
-                DetailScreen(navController = navController, scrollState = scrollState, school = school, viewModel, isLoading, isError)
-            }
-
+            val url = navBackStackEntry.arguments?.getString("url")!!
+            WebviewScreen(navController = navController, url = url, isLoading = isLoading, isError = isError)
         }
     }
 
@@ -81,7 +71,15 @@ fun NavGraphBuilder.bottomNavigation(
             isError
         )
     }
-    composable(BottomMenu.Boro.route) {
+    composable(BottomMenu.Search.route) {
+        SearchScreen(
+            isLoading,
+            isError,
+            navController,
+            viewModel
+        )
+    }
+//    composable(BottomMenu.Boro.route) {
 //        BoroScreen(
 //            onFetchBoro = {
 //                viewModel.onSelectedBoroChanged(it)
@@ -92,16 +90,16 @@ fun NavGraphBuilder.bottomNavigation(
 //            isError = isError,
 //            navController = navController
 //        )
-    }
-    composable(BottomMenu.Neighborhood.route) {
+//    }
+//    composable(BottomMenu.Neighborhood.route) {
 //        NeighborhoodScreen(
-////            onFetchHood = { viewModel.getSchoolByNeighborhood(it) },
-////            viewModel = viewModel,
-////            isLoading = isLoading,
-////            isError = isError,
-////            navController = navController
+//            onFetchHood = { viewModel.getSchoolByNeighborhood(it) },
+//            viewModel = viewModel,
+//            isLoading = isLoading,
+//            isError = isError,
+//            navController = navController
 //        )
-    }
+//    }
     composable(BottomMenu.Favorites.route) {
         // TODO Add favorties screen that data is saved in and loaded from Room DB
     }

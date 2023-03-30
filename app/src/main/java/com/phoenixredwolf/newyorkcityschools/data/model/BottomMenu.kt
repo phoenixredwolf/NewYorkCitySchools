@@ -1,10 +1,7 @@
 package com.phoenixredwolf.newyorkcityschools.data.model
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Favorite
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Map
-import androidx.compose.material.icons.outlined.NearMe
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class BottomMenu(
@@ -16,6 +13,12 @@ sealed class BottomMenu(
         "home",
         icon = Icons.Outlined.Home,
         "Home"
+    )
+
+    object Search: BottomMenu(
+        "search",
+        icon = Icons.Outlined.Search,
+        "Search"
     )
 
     object Boro: BottomMenu(

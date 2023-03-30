@@ -13,19 +13,16 @@ fun BottomBarComponent(navController: NavController) {
 
     val menuItems = listOf(
         BottomMenu.Home,
-        BottomMenu.Boro,
-        BottomMenu.Neighborhood,
+        BottomMenu.Search,
         BottomMenu.Favorites
     )
 
-    NavigationBar(
-        containerColor = MaterialTheme.colorScheme.primaryContainer
-    ) {
+    NavigationBar {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
         menuItems.forEach {
             NavigationBarItem(
-                label = { Text( text = it.title, color = MaterialTheme.colorScheme.onPrimaryContainer ) },
+                label = { Text( text = it.title ) },
                 alwaysShowLabel = true,
                 selected = currentRoute == it.route,
                 onClick = {
@@ -41,7 +38,7 @@ fun BottomBarComponent(navController: NavController) {
                     }
                 },
                 icon = {
-                    Icon ( imageVector = it.icon, contentDescription = it.title, tint = MaterialTheme.colorScheme.onPrimaryContainer )
+                    Icon ( imageVector = it.icon, contentDescription = it.title )
                 }
             )
         }

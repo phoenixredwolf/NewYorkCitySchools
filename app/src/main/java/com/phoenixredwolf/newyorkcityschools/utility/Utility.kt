@@ -7,10 +7,11 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.navigation.NavController
 import com.phoenixredwolf.newyorkcityschools.data.model.School
 
 @Composable
-fun StringHyperlink(url: String) {
+fun StringHyperlink(url: String, navController: NavController) {
     val annotatedLinkString = buildAnnotatedString {
 
         val link = "https://$url"
@@ -39,7 +40,8 @@ fun StringHyperlink(url: String) {
         onClick = {
             annotatedLinkString.getStringAnnotations("URL", it, it).firstOrNull()
                 ?.let { stringAnnotation ->
-                    uriHandler.openUri(stringAnnotation.item)
+                    val uri = stringAnnotation.item
+                    navController.navigate("Web/$uri")
                 }
         })
 }
@@ -50,4 +52,14 @@ fun getNeighborhoods(schools: List<School>): List<String> {
         it.neighborhood?.let { it1 -> neighborhoods.add(it1) }
     }
     return neighborhoods.toList()
+}
+
+fun getBoroName(boroname: String): String {
+    val result: String
+    when (boroname) {
+        "SELECT_BORO" -> result = "SELECT BORO"
+        "STATEN_ISLAND" -> result = "STATEN ISLAND"
+        else -> result = boroname
+    }
+    return result
 }

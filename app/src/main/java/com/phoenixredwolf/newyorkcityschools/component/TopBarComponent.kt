@@ -11,14 +11,18 @@ import com.phoenixredwolf.newyorkcityschools.data.model.School
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBarComponent(school: School, onBackPressed: () -> Unit = {}) {
+fun TopBarComponent(school: School?, onBackPressed: () -> Unit = {}) {
     TopAppBar(
-        title = { Text(
-            text = school.school_name!!,
-            fontWeight = FontWeight.Bold,
-            fontSize = 16.sp,
-            color = MaterialTheme.colorScheme.onPrimaryContainer
-        ) },
+        title = {
+            if (school != null) {
+                Text(
+                    text = school.school_name!!,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            }
+        },
         navigationIcon = {
             IconButton(onClick = {
                 onBackPressed()

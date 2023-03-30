@@ -2,10 +2,13 @@ package com.phoenixredwolf.newyorkcityschools.ui.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.phoenixredwolf.newyorkcityschools.component.DetailComponent
 import com.phoenixredwolf.newyorkcityschools.component.ErrorUI
@@ -18,7 +21,6 @@ import com.phoenixredwolf.newyorkcityschools.ui.viewmodel.MainViewModel
 @Composable
 fun DetailScreen(
     navController: NavController,
-    scrollState: ScrollState,
     school: School,
     viewModel: MainViewModel,
     isLoading: MutableState<Boolean>,
@@ -45,7 +47,10 @@ fun DetailScreen(
                     })
                 }
             ) {
-                DetailComponent(scrollState = scrollState, school = school, sat = sat)
+                Column(modifier = Modifier.padding(it)){
+                    DetailComponent(navController, scrollState = ScrollState(0), school = school, sat = sat)
+                }
+
             }
 
         }
