@@ -24,7 +24,8 @@ fun DetailScreen(
     school: School,
     viewModel: MainViewModel,
     isLoading: MutableState<Boolean>,
-    isError: MutableState<Boolean>
+    isError: MutableState<Boolean>,
+    bottomBarState: MutableState<Boolean>
 ) {
 
     when {
@@ -48,6 +49,7 @@ fun DetailScreen(
                 }
             ) {
                 Column(modifier = Modifier.padding(it)){
+                    bottomBarState.value = true
                     DetailComponent(navController, scrollState = ScrollState(0), school = school, sat = sat)
                 }
 

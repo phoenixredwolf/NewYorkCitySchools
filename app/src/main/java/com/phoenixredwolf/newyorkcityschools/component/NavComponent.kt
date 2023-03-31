@@ -19,7 +19,8 @@ import com.phoenixredwolf.newyorkcityschools.ui.viewmodel.MainViewModel
 fun Navigation(
     navController: NavHostController,
     paddingValues: PaddingValues,
-    viewModel: MainViewModel
+    viewModel: MainViewModel,
+    bottomBarState: MutableState<Boolean>
 ) {
     val loading by viewModel.isLoading.collectAsState()
     val error by viewModel.isError.collectAsState()
@@ -43,14 +44,15 @@ fun Navigation(
                 schools.addAll(viewModel.schoolsResponse.value)
                 val school = schools[index]
                 school.dbn?.let { sat -> viewModel.getSatScores(sat) }
-                DetailScreen(navController = navController, school = school, viewModel, isLoading, isError)
+                DetailScreen(navController = navController, school = school, viewModel, isLoading, isError, bottomBarState)
             }
         }
         composable("Web/{url}",
             arguments = listOf(navArgument("url") {type = NavType.StringType})
         ) {navBackStackEntry ->
             val url = navBackStackEntry.arguments?.getString("url")!!
-            WebviewScreen(navController = navController, url = url, isLoading = isLoading, isError = isError)
+            bottomBarState.value = false
+            WebviewScreen(navController = navController, url = url, isLoading = isLoading, isError = isError, bottomBarState = bottomBarState)
         }
     }
 

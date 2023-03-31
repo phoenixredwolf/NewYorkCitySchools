@@ -108,7 +108,6 @@ fun DetailComponent(
                 .padding(8.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-//            StringHyperlink(url = URLEncoder.encode(school.website!!, "UTF-8"), navController)
             Text(
                 modifier = Modifier.clickable {
                     val url = school.website!!

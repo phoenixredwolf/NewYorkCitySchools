@@ -11,6 +11,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 @Composable
 fun WebViewComponent(
     url: String, modifier: Modifier) {
+
+    val address = "https://$url"
     Box(modifier = modifier){
         AndroidView(factory = {
             WebView(it).apply {
@@ -18,11 +20,14 @@ fun WebViewComponent(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
                 )
+                val webSettings = settings
+                webSettings.loadWithOverviewMode = true
+                webSettings.javaScriptEnabled = true
                 webViewClient = WebViewClient()
-                loadUrl(url)
+                loadUrl(address)
             }
         }, update =  {
-            it.loadUrl(url)
+            it.loadUrl(address)
         })
 
     }

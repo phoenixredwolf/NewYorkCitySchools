@@ -13,12 +13,14 @@ import com.phoenixredwolf.newyorkcityschools.component.LoadingUI
 import com.phoenixredwolf.newyorkcityschools.component.TopBarComponent
 import com.phoenixredwolf.newyorkcityschools.component.WebViewComponent
 
+
 @Composable
 fun WebviewScreen(
     url: String,
     isLoading: MutableState<Boolean>,
     isError: MutableState<Boolean>,
-    navController: NavController
+    navController: NavController,
+    bottomBarState: MutableState<Boolean>
 ){
 
     when {
@@ -33,13 +35,12 @@ fun WebviewScreen(
                 topBar = {
                     TopBarComponent(school = null, onBackPressed = {
                         navController.popBackStack()
+                        bottomBarState.value = true
                     })
                 }
             ) {
                 Column(modifier = Modifier.padding(it)) {
-                    val address = "https://$url"
-                    WebViewComponent(url = address, Modifier.fillMaxSize())
-                    //        Text(text = url)
+                    WebViewComponent(url = url, Modifier.fillMaxSize())
                 }
             }
         }
